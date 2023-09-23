@@ -1,12 +1,12 @@
-import background from "./assets/background.png";
+import NavBar from "./components/NavBar";
+import HeroSection from "./components/HeroSection";
 
 function App() {
   return (
-    <img
-      className="object-scale-down"
-      src={background}
-      alt="Scholarly Logo shown over landscape background"
-    />
+    <div className="flex flex-col">
+      <NavBar />
+      <HeroSection />
+    </div>
   );
 }
 
