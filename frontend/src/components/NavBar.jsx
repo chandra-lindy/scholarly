@@ -1,4 +1,5 @@
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
@@ -6,14 +7,14 @@ const NavBar = () => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-brand-aux-1 font-bold text-2xl">
           <img className="h-[3.75rem] w-auto inline-block" src={logo} alt="" />
-          Scholarly
+          <Link to="/">Scholarly</Link>
         </div>
         <div>
           <button className="mr-14 text-brand-aux-1 hover:text-brand-aux-2 text-l">
             Register
           </button>
           <button className="text-brand-aux-1 hover:text-brand-aux-2 text-l">
-            Login
+            <Link to="/dashboard">Login</Link>
           </button>
         </div>
       </div>

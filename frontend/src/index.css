@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply bg-brand-aux-1 hover:bg-brand-aux-2 text-white py-2 px-4 rounded mx-2;
+  }
+  .text-link {
+    @apply text-brand-aux-1 hover:text-brand-aux-2;
+  }
+}
+
+@layer base {
+  html {
+    @apply bg-brand-paper;
+  }
+
+  input {
+    @apply focus:ring-0 focus:ring-offset-0 focus:outline-none;
+  }
+}
