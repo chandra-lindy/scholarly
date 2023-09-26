@@ -1,7 +1,7 @@
 // HeroSection.jsx
 import heroImage from "../assets/scholarly-hero.jpeg";
 
-const HeroSection = () => {
+const Hero = () => {
   return (
     <div className="relative mt-[3.75rem]">
       <img className="w-full" src={heroImage} alt="Hero Image" />
@@ -11,7 +11,7 @@ const HeroSection = () => {
           <div className="text-white text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-5">
             The Future of Academics
           </div>
-          <button className="bg-brand-aux-1 hover:bg-brand-aux-2 text-white py-2 px-4 rounded m-auto">
+          <button className="bg-brand-aux-1 hover:bg-brand-aux-2 text-white py-2 px-4 rounded m-auto transition duration-300">
             Sign Up Today
           </button>
         </div>
@@ -20,4 +20,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default Hero;
