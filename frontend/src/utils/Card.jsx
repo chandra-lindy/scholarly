@@ -10,7 +10,7 @@ const Card = ({ type, title }) => {
     );
 
   return (
-    <div className=" flex bg-brand-main mt-2 p-4 rounded-lg hover:bg-brand-aux-2 transition duration-300">
+    <div className=" flex bg-brand-main mt-2 px-4 py-2 rounded-lg hover:bg-brand-aux-2 transition duration-300">
       {icon}
       {title}
     </div>
