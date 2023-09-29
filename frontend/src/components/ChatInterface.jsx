@@ -1,4 +1,5 @@
 import chatIcon from "../assets/chat.png";
+import PropTypes from "prop-types";
 
 const ChatInterface = ({ chatRef }) => {
   return (
@@ -18,6 +19,10 @@ const ChatInterface = ({ chatRef }) => {
       </div>
     </div>
   );
+};
+
+ChatInterface.propTypes = {
+  chatRef: PropTypes.object.isRequired,
 };
 
 export default ChatInterface;
