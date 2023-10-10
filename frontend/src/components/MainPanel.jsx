@@ -6,7 +6,7 @@ const MainPanel = () => {
   ));
 
   return (
-    <div className="w-4/5 bg-brand-paper text-lg text-brand-main p-4 mr-12 overflow-y-auto h-[calc(100vh-3.75rem)]">
+    <div className="w-4/5 bg-brand-paper text-lg text-brand-main px-4 pb-4 mr-12 overflow-y-auto h-[calc(100vh-3.75rem)]">
       {paragraphs}
     </div>
   );
