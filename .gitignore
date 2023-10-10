@@ -26,3 +26,6 @@ dist-ssr
 # Python directories and files
 __pycache__/
 venv/
+
+# Security
+*.pem
