@@ -1,10 +1,10 @@
 version: 0.0
 os: linux
 files:
-  - source: "backend/"
+  - source: "."
     destination: /home/ubuntu/scholarly/backend
 hooks:
   BeforeInstall:
-    - location: scripts/install_dependencies.sh
+    - location: backend/scripts/install_dependencies.sh
       timeout: 300
       runas: ubuntu
