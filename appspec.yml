@@ -1,0 +1,10 @@
+version: 0.0
+os: linux
+files:
+  - source: "."
+    destination: /home/ubuntu/scholarly/backend
+hooks:
+  BeforeInstall:
+    - location: backend/scripts/install_dependencies.sh
+      timeout: 300
+      runas: ubuntu
