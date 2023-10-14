@@ -5,6 +5,7 @@ import MainPanel from "../components/MainPanel";
 import ChatIcon from "../components/ChatIcon";
 import ChatInterface from "../components/ChatInterface";
 import { useState, useEffect, useRef } from "react";
+import { withAuthenticator } from "@aws-amplify/ui-react";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,4 +40,5 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuthenticator(Dashboard);
+// export default Dashboard;
