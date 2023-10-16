@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { Auth } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo-no-slogan.png";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,22 +24,27 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="w-1/3">
-        <input
-          type="text"
-          placeholder="Email"
-          className="p-2 mb-4 border rounded"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="p-2 mb-4 border rounded"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="p-2 text-white bg-blue-500 rounded" onClick={signIn}>
-          Sign In
-        </button>
+      <div className="flex flex-col items-center bg-white rounded-lg p-8 shadow-lg">
+        <Link to="/">
+          <img src={logo} alt="Scholarly Logo" className="max-w-md mb-12" />
+        </Link>
+        <div className="flex flex-col w-full">
+          <input
+            type="text"
+            placeholder="Email"
+            className="p-2 mb-4 border rounded"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="p-2 mb-4 border rounded"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="btn" onClick={signIn}>
+            Sign In
+          </button>
+        </div>
       </div>
     </div>
   );

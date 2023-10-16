@@ -4,7 +4,7 @@
 
 @layer components {
   .btn {
-    @apply bg-brand-aux-1 hover:bg-brand-aux-2 text-white py-2 px-4 rounded mx-2;
+    @apply bg-brand-aux-1 hover:bg-brand-aux-2 text-white py-2 px-4 rounded;
   }
   .text-link {
     @apply text-brand-aux-1 hover:text-brand-aux-2;
