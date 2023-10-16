@@ -11,10 +11,10 @@ const NavBar = () => {
         </div>
         <div>
           <button className="mr-14 text-brand-aux-1 hover:text-brand-aux-2 text-l">
-            Register
+            <Link to="/register">Register</Link>
           </button>
           <button className="text-brand-aux-1 hover:text-brand-aux-2 text-l">
-            <Link to="/dashboard">Login</Link>
+            <Link to="/login">Login</Link>
           </button>
         </div>
       </div>

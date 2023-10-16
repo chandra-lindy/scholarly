@@ -12,7 +12,7 @@ const Hero = () => {
           <div className="text-white text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-5">
             The Future of Academics
           </div>
-          <Link to="/dashboard">
+          <Link to="/register">
             <button className="bg-brand-aux-1 hover:bg-brand-aux-2 text-white py-2 px-4 rounded m-auto transition duration-300">
               Sign Up Today
             </button>

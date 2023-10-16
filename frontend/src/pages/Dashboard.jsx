@@ -5,11 +5,27 @@ import MainPanel from "../components/MainPanel";
 import ChatIcon from "../components/ChatIcon";
 import ChatInterface from "../components/ChatInterface";
 import { useState, useEffect, useRef } from "react";
-import { withAuthenticator } from "@aws-amplify/ui-react";
+import { useNavigate } from "react-router-dom";
+import { Auth } from "aws-amplify";
+// import { withAuthenticator } from "@aws-amplify/ui-react";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
   const chatRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await Auth.currentAuthenticatedUser();
+      } catch {
+        navigate("/login");
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   const handleClickOutside = (e) => {
     if (chatRef.current && !chatRef.current.contains(e.target)) {
@@ -40,5 +56,5 @@ const Dashboard = () => {
   );
 };
 
-export default withAuthenticator(Dashboard);
-// export default Dashboard;
+// export default withAuthenticator(Dashboard);
+export default Dashboard;
