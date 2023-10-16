@@ -14,7 +14,7 @@ const LeftPanel = () => {
   ));
 
   return (
-    <div className="flex-none shrink-0 w-1/5">
+    <div className="flex-none shrink-0 w-1/5 mt-2">
       <FileUpload />
       {bookCards}
     </div>
