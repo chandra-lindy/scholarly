@@ -1,4 +1,3 @@
-// import NavBar from "../components/NavBar";
 import NavBarDash from "../components/NavBarDash";
 import LeftPanel from "../components/LeftPanel";
 import MainPanel from "../components/MainPanel";
@@ -7,7 +6,6 @@ import ChatInterface from "../components/ChatInterface";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Auth } from "aws-amplify";
-// import { withAuthenticator } from "@aws-amplify/ui-react";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,5 +54,4 @@ const Dashboard = () => {
   );
 };
 
-// export default withAuthenticator(Dashboard);
 export default Dashboard;
