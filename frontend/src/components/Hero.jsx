@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <div className="relative mt-[3.75rem]">
+    <div className="relative mt-[3.65rem]">
       <img className="w-full" src={heroImage} alt="Hero Image" />
       <div className="absolute inset-0 bg-black opacity-40" />
       <div className="absolute top-0 left-0 z-10 flex flex-col justify-center h-full w-1/2">
