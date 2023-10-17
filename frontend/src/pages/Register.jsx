@@ -28,7 +28,7 @@ const Register = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="flex flex-col bg-white p-8">
+      <div className="flex flex-col bg-white p-8 rounded-log shadow-lg">
         <Link to="/">
           <img src={logo} alt="Scholarly Logo" className="max-w-md mb-12" />
         </Link>
@@ -36,17 +36,17 @@ const Register = () => {
           <input
             type="text"
             placeholder="Email"
-            className="p-2 mb-4 border rounded"
+            className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
-            className="p-2 mb-4 border rounded"
+            className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="btn" onClick={signUp}>
-            Sign Up
+            Register
           </button>
         </div>
       </div>

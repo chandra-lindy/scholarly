@@ -32,17 +32,17 @@ const Login = () => {
           <input
             type="text"
             placeholder="Email"
-            className="p-2 mb-4 border rounded"
+            className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
-            className="p-2 mb-4 border rounded"
+            className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="btn" onClick={signIn}>
-            Sign In
+            Login
           </button>
         </div>
       </div>
