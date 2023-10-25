@@ -10,7 +10,6 @@ const Landing = () => {
     const fetchData = async () => {
       try {
         console.log(`${BACKEND_URL}/`);
-        console.log("process.env: ", process.env);
         const response = await axios.get(`${BACKEND_URL}/`);
         console.log("response: ", response.data);
       } catch (error) {
