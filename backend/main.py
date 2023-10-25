@@ -12,6 +12,7 @@ aws_session_token = os.environ.get("AWS_SESSION_TOKEN")
 app = FastAPI()
 
 origins = [
+  "https://scholarly-ai.com",
   os.environ.get("FRONTEND_URL"),
 ]
 
