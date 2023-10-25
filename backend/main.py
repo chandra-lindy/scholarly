@@ -12,7 +12,7 @@ aws_session_token = os.environ.get("AWS_SESSION_TOKEN")
 app = FastAPI()
 
 origins = [
-  "http://localhost:5173",
+  os.environ.get("FRONTEND_URL"),
 ]
 
 app.add_middleware(
