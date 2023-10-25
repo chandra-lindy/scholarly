@@ -24,6 +24,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def log_middleware(request, call_next):
+    response = await call_next(request)
+    print(response.headers)
+    return response
+
 @app.get("/")
 async def root():
     return {"message": "World! Ready or not ... Here I come!!"}
