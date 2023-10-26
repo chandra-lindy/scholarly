@@ -31,3 +31,6 @@ venv/
 # Security
 *.pem
 .env
+
+# dev
+temp.py
