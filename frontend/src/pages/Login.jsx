@@ -14,24 +14,22 @@ const Login = () => {
 
   const signIn = async () => {
     try {
-      const user = await Auth.signIn(email, password);
-      console.log("Successfully signed in", user);
+      await Auth.signIn(email, password);
       navigate("/dashboard");
     } catch (error) {
       navigate("/login", { state: { error: error.message } });
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") signIn();
-  };
-
   useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === "Enter") signIn();
+    };
     document.addEventListener("keydown", handleKeyPress);
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  });
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">

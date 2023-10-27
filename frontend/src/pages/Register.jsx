@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo-no-slogan.png";
@@ -14,20 +14,28 @@ const Register = () => {
 
   const signUp = async () => {
     try {
-      const { user } = await Auth.signUp({
+      await Auth.signUp({
         username: email,
         password,
         attributes: {
           email,
         },
       });
-      console.log("User signed up:", user);
       navigate("/confirm");
     } catch (error) {
-      console.log("Error signing up:", error);
       navigate("/register", { state: { error: error.message } });
     }
   };
+
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === "Enter") signUp();
+    };
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
