@@ -11,6 +11,11 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const errorMessage = location.state?.error || "";
+  const emailFromConfirm = location.state?.email || "";
+
+  useEffect(() => {
+    setEmail(emailFromConfirm);
+  }, []);
 
   const signIn = async () => {
     try {
@@ -23,7 +28,9 @@ const Login = () => {
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (e.key === "Enter") signIn();
+      if (e.key === "Enter") {
+        signIn();
+      }
     };
     document.addEventListener("keydown", handleKeyPress);
     return () => {

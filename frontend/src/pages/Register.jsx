@@ -21,7 +21,7 @@ const Register = () => {
           email,
         },
       });
-      navigate("/confirm");
+      navigate("/confirm", { state: { email } });
     } catch (error) {
       navigate("/register", { state: { error: error.message } });
     }
@@ -29,7 +29,9 @@ const Register = () => {
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (e.key === "Enter") signUp();
+      if (e.key === "Enter") {
+        signUp();
+      }
     };
     document.addEventListener("keydown", handleKeyPress);
     return () => {
@@ -44,7 +46,6 @@ const Register = () => {
           <img src={logo} alt="Scholarly Logo" className="max-w-md mb-4" />
         </Link>
 
-        {/* display error message */}
         <p
           className="p-2 my-4 text-red-600 text-xs"
           style={{ visibility: errorMessage ? "visible" : "hidden" }}
