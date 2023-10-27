@@ -18,6 +18,7 @@ const Login = () => {
   }, []);
 
   const signIn = async () => {
+    console.log("email: ", email);
     try {
       await Auth.signIn(email, password);
       navigate("/dashboard");
@@ -36,7 +37,7 @@ const Login = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, []);
+  }, [signIn]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -56,7 +57,8 @@ const Login = () => {
         <div className="flex flex-col w-full">
           <input
             type="text"
-            placeholder="Email"
+            placeholder={emailFromConfirm || "Email"}
+            value={emailFromConfirm || ""}
             className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setEmail(e.target.value)}
           />

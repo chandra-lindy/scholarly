@@ -36,13 +36,13 @@ const ConfirmRegistration = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, []);
+  }, [confirmSignUp]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="flex flex-col bg-white p-8 rounded-lg shadow-lg">
         <Link to="/">
-          <img src={logo} alt="Scholarly logo" className="max-w-md mb-12" />
+          <img src={logo} alt="Scholarly logo" className="max-w-md mb-4" />
         </Link>
         <p
           className="p-2 my-4 text-red-600 text-xs text-center"
@@ -52,7 +52,8 @@ const ConfirmRegistration = () => {
         </p>
         <input
           type="text"
-          placeholder="Email"
+          placeholder={emailFromRegister || "Email"}
+          value={emailFromRegister || ""}
           className="p-2 mb-4 border border-brand-main rounded"
           onChange={(e) => setEmail(e.target.value)}
         />
