@@ -13,6 +13,12 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
+  const handleClickOutside = (e) => {
+    if (chatRef.current && !chatRef.current.contains(e.target)) {
+      setIsOpen(false);
+    }
+  };
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -24,12 +30,6 @@ const Dashboard = () => {
 
     checkAuth();
   }, [navigate]);
-
-  const handleClickOutside = (e) => {
-    if (chatRef.current && !chatRef.current.contains(e.target)) {
-      setIsOpen(false);
-    }
-  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);

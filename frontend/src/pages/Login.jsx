@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo-no-slogan.png";
@@ -21,6 +21,17 @@ const Login = () => {
       navigate("/login", { state: { error: error.message } });
     }
   };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") signIn();
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  });
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
