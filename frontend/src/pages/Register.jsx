@@ -61,6 +61,7 @@ const Register = () => {
         <div className="flex flex-col w-full">
           <input
             type="text"
+            name="email"
             placeholder="Email"
             className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setEmail(e.target.value)}
@@ -68,6 +69,7 @@ const Register = () => {
           />
           <input
             type="password"
+            name="password"
             placeholder="Password"
             className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setPassword(e.target.value)}

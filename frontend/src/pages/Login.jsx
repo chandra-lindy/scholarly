@@ -66,6 +66,7 @@ const Login = () => {
         <div className="flex flex-col w-full">
           <input
             type="text"
+            name="email"
             placeholder={emailFromConfirm || "Email"}
             disabled={emailFromConfirm}
             className="p-2 mb-4 border border-brand-main rounded"
@@ -74,6 +75,7 @@ const Login = () => {
           />
           <input
             type="password"
+            name="password"
             placeholder="Password"
             className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setPassword(e.target.value)}

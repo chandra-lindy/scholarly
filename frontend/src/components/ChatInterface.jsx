@@ -12,6 +12,7 @@ const ChatInterface = ({ chatRef }) => {
         <input
           className="w-full mr-4 bg-brand-main p-2 pl-4 rounded-xl text-brand-paper"
           type="text"
+          id="chat input"
         />
         <div className="p-2">
           <img src={chatIcon} alt="Chat Icon" />

@@ -57,6 +57,7 @@ const ConfirmRegistration = () => {
         </p>
         <input
           type="text"
+          name="email"
           placeholder={emailFromRegister || "Email"}
           disabled={emailFromRegister}
           className="p-2 mb-4 border border-brand-main rounded"
@@ -64,6 +65,7 @@ const ConfirmRegistration = () => {
         />
         <input
           type="text"
+          name="code"
           placeholder="Confirmation code"
           className="p-2 mb-4 border border-brand-main rounded"
           onChange={(e) => setCode(e.target.value)}
