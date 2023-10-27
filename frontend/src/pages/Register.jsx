@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Auth } from "aws-amplify";
 import { useNavigate, useLocation } from "react-router-dom";
-import logo from "../assets/logo-no-slogan.png";
 import { Link } from "react-router-dom";
+import logo from "../assets/logo-no-slogan.png";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -11,8 +11,9 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const errorMessage = location.state?.error || "";
+  const emailInputRef = useRef(null);
 
-  const signUp = async () => {
+  const signUp = useCallback(async () => {
     try {
       await Auth.signUp({
         username: email,
@@ -25,7 +26,11 @@ const Register = () => {
     } catch (error) {
       navigate("/register", { state: { error: error.message } });
     }
-  };
+  }, [email, password, navigate]);
+
+  useEffect(() => {
+    emailInputRef.current.focus();
+  }, []);
 
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -59,6 +64,7 @@ const Register = () => {
             placeholder="Email"
             className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setEmail(e.target.value)}
+            ref={emailInputRef}
           />
           <input
             type="password"

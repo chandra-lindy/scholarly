@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Auth } from "aws-amplify";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo-no-slogan.png";
@@ -12,12 +12,14 @@ const Login = () => {
   const location = useLocation();
   const errorMessage = location.state?.error || "";
   const emailFromConfirm = location.state?.email || "";
+  const passwordInputRef = useRef(null);
+  const emailInputRef = useRef(null);
 
   useEffect(() => {
     setEmail(emailFromConfirm);
-  }, []);
+  }, [emailFromConfirm]);
 
-  const signIn = async () => {
+  const signIn = useCallback(async () => {
     console.log("email: ", email);
     try {
       await Auth.signIn(email, password);
@@ -25,7 +27,7 @@ const Login = () => {
     } catch (error) {
       navigate("/login", { state: { error: error.message } });
     }
-  };
+  }, [email, password, navigate]);
 
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -39,6 +41,14 @@ const Login = () => {
     };
   }, [signIn]);
 
+  useEffect(() => {
+    if (passwordInputRef.current) {
+      passwordInputRef.current.focus();
+    } else {
+      emailInputRef.current.focus();
+    }
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="flex flex-col items-center bg-white rounded-lg p-8 shadow-lg">
@@ -46,7 +56,6 @@ const Login = () => {
           <img src={logo} alt="Scholarly Logo" className="max-w-md mb-4" />
         </Link>
 
-        {/* error message display */}
         <p
           className="p-2 my-4 text-red-600 text-xs"
           style={{ visibility: errorMessage ? "visible" : "hidden" }}
@@ -58,15 +67,17 @@ const Login = () => {
           <input
             type="text"
             placeholder={emailFromConfirm || "Email"}
-            value={emailFromConfirm || ""}
+            disabled={emailFromConfirm}
             className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setEmail(e.target.value)}
+            ref={emailInputRef}
           />
           <input
             type="password"
             placeholder="Password"
             className="p-2 mb-4 border border-brand-main rounded"
             onChange={(e) => setPassword(e.target.value)}
+            ref={emailFromConfirm ? passwordInputRef : null}
           />
           <button className="btn" onClick={signIn}>
             Login

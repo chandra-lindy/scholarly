@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Auth } from "aws-amplify";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo-no-slogan.png";
@@ -12,19 +12,24 @@ const ConfirmRegistration = () => {
   const location = useLocation();
   const errorMessage = location.state?.error || "";
   const emailFromRegister = location.state?.email || "";
+  const confirmCodeInputRef = useRef(null);
+
+  useEffect(() => {
+    confirmCodeInputRef.current.focus();
+  }, []);
 
   useEffect(() => {
     setEmail(emailFromRegister);
-  }, []);
+  }, [emailFromRegister]);
 
-  const confirmSignUp = async () => {
+  const confirmSignUp = useCallback(async () => {
     try {
       await Auth.confirmSignUp(email, code);
       navigate("/login", { state: { email } });
     } catch (error) {
       navigate("/confirm", { state: { error: error.message } });
     }
-  };
+  }, [email, code, navigate]);
 
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -53,7 +58,7 @@ const ConfirmRegistration = () => {
         <input
           type="text"
           placeholder={emailFromRegister || "Email"}
-          value={emailFromRegister || ""}
+          disabled={emailFromRegister}
           className="p-2 mb-4 border border-brand-main rounded"
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -62,6 +67,7 @@ const ConfirmRegistration = () => {
           placeholder="Confirmation code"
           className="p-2 mb-4 border border-brand-main rounded"
           onChange={(e) => setCode(e.target.value)}
+          ref={confirmCodeInputRef}
         />
         <button className="btn" onClick={confirmSignUp}>
           Confirm
