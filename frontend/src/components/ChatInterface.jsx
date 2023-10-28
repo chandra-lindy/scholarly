@@ -17,6 +17,11 @@ const ChatInterface = ({ chatRef }) => {
   };
 
   useEffect(() => {
+    // send message to backend
+    console.log("messages: ", messages);
+  }, [messages]);
+
+  useEffect(() => {
     if (chatDisplayRef.current) {
       chatDisplayRef.current.scrollTop = chatDisplayRef.current.scrollHeight;
     }

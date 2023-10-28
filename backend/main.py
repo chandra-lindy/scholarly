@@ -23,6 +23,7 @@ jwt_algorithm = os.environ.get("JWT_ALGORITHM")
 jwt_audience = os.environ.get("JWT_AUDIENCE")
 jwt_issuer = os.environ.get("JWT_ISSUER")
 cognito_jwk_url = os.environ.get("COGNITO_JWK_URL")
+openai_key = os.environ.get("OPENAI_KEY")
 
 app = FastAPI()
 
