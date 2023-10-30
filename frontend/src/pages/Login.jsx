@@ -20,7 +20,6 @@ const Login = () => {
   }, [emailFromConfirm]);
 
   const signIn = useCallback(async () => {
-    console.log("email: ", email);
     try {
       await Auth.signIn(email, password);
       navigate("/dashboard");

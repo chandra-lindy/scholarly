@@ -7,10 +7,12 @@ import os
 import requests
 
 # third party imports
-from fastapi import FastAPI, Depends, HTTPException, Security
+from fastapi import FastAPI, Depends, HTTPException, Security, WebSocket, WebSocketDisconnect
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.middleware.cors import CORSMiddleware
 from jose import JWTError, jwt
+
+
 
 load_dotenv()
 
@@ -87,6 +89,20 @@ def get_current_user(authorization: HTTPAuthorizationCredentials = Security(secu
         return user
     except JWTError:
         raise HTTPException(status_code=403, detail="Invalid Token")
+
+@app.websocket("/ws/{user_name}")
+async def websocket_endpoint(socket: WebSocket, user_name: str):
+    print('user_name: ', user_name)
+    await socket.accept()
+
+    try:
+        while True:
+            data = await socket.receive_text()
+            # do something with data here, then . . .
+            print(f"Received message: {data}")
+            await socket.send_text(f"Echoing: {data}")
+    except WebSocketDisconnect:
+        print("websocket disconnected")
 
 @app.post("/chat")
 async def chat_route(current_user: str = Depends(get_current_user)):

@@ -16,8 +16,12 @@ const Dashboard = () => {
   const handleClickOutside = (e) => {
     if (chatRef.current && !chatRef.current.contains(e.target)) {
       setIsOpen(false);
+      console.log("clicked outside");
     }
   };
+  useEffect(() => {
+    console.log("isOpen: ", isOpen);
+  }, [isOpen]);
 
   useEffect(() => {
     const checkAuth = async () => {

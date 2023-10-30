@@ -2,30 +2,73 @@ import { useState, useEffect, useRef } from "react";
 import ChatMessage from "./ChatMessage";
 import chatIcon from "../assets/chat.png";
 import PropTypes from "prop-types";
+import { getSocket } from "../utils/utils";
 
 const ChatInterface = ({ chatRef }) => {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
   const chatDisplayRef = useRef(null);
+  const socketRef = useRef(null);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (userInput.trim()) {
-      setMessages([...messages, { source: "user", text: userInput }]);
+      const user_message = { source: "user", text: userInput };
+
+      socketRef.current.send(userInput);
+
+      setMessages([...messages, user_message]);
       setUserInput("");
     }
   };
 
   useEffect(() => {
-    // send message to backend
-    console.log("messages: ", messages);
-  }, [messages]);
+    console.log("chatInterface mounted");
+    let isMounted = true;
+
+    const setupSocket = async () => {
+      const socketInstance = await getSocket();
+      if (!isMounted) return;
+
+      socketRef.current = socketInstance;
+
+      socketInstance.addEventListener("open", (e) => {
+        console.log("connected to server", e);
+      });
+
+      socketInstance.addEventListener("message", (e) => {
+        console.log("Received from server: ", e.data);
+      });
+    };
+
+    setupSocket();
+
+    return () => {
+      console.log("ChatInstance unmounted");
+      isMounted = false;
+      if (socketRef.current) {
+        console.log("cleaning up websocket connection");
+        socketRef.current.close();
+      }
+    };
+  }, []);
+
+  // // test successful!
+  // useEffect(() => {
+  //   if (socketRef.current) {
+  //     const socket = socketRef.current;
+  //     socket.addEventListener("message", (e) => {
+  //       const message = e.data;
+  //       console.log("message received: ", message);
+  //     });
+  //   }
+  // }, [messages]);
 
   useEffect(() => {
     if (chatDisplayRef.current) {
       chatDisplayRef.current.scrollTop = chatDisplayRef.current.scrollHeight;
     }
-  });
+  }, [messages]);
 
   return (
     <div
