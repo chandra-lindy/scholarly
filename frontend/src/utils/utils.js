@@ -24,26 +24,6 @@ export async function fetchToken() {
   }
 }
 
-export async function getResponse(payload) {
-  const token = await fetchToken();
-  if (token) {
-    try {
-      const response = await axios.post(
-        `ws:${HTTP_BACKEND_URL}/chat`,
-        payload,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      console.log(response.data);
-    } catch (err) {
-      console.log("Error: ", err);
-    }
-  }
-}
-
 export async function getSocket() {
   const user = await fetchCurrentUser();
   const user_name = user.username;
