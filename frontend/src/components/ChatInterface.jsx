@@ -32,6 +32,7 @@ const ChatInterface = ({ chatRef }) => {
     let isMounted = true;
 
     const setupSocket = async () => {
+      console.log("setting up socket");
       const socketInstance = await getSocket();
       if (!isMounted) return;
 
