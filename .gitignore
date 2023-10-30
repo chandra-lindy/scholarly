@@ -34,3 +34,6 @@ venv/
 
 # dev
 temp.py
+
+# app
+uploads/

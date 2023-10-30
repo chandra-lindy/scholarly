@@ -1,6 +1,5 @@
 import { Auth } from "aws-amplify";
-import axios from "axios";
-import { HTTP_BACKEND_URL } from "./constants.js";
+// import { HTTP_BACKEND_URL } from "./constants.js";
 import { WS_BACKEND_URL } from "./constants.js";
 
 export async function fetchCurrentUser() {
@@ -15,7 +14,7 @@ export async function fetchCurrentUser() {
 
 export async function fetchToken() {
   try {
-    const user = fetchCurrentUser();
+    const user = await fetchCurrentUser();
     const jwtToken = user.signInUserSession.idToken.jwtToken;
     return jwtToken;
   } catch (err) {

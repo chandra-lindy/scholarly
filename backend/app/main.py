@@ -8,13 +8,17 @@ import json
 import requests
 
 # third party imports
-from fastapi import FastAPI, Depends, HTTPException, Security, WebSocket, WebSocketDisconnect
+from fastapi import (
+    FastAPI, Depends, HTTPException,
+    Security, WebSocket, WebSocketDisconnect,
+    File, UploadFile)
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.middleware.cors import CORSMiddleware
 from jose import JWTError, jwt
 
 # local imports
 from chat import chat
+from file_operations.file_handler import save_upload_file, get_file_path
 
 load_dotenv()
 
@@ -92,6 +96,12 @@ def get_current_user(authorization: HTTPAuthorizationCredentials = Security(secu
     except JWTError:
         raise HTTPException(status_code=403, detail="Invalid Token")
 
+@app.post("/upload")
+async def upload_file(file: UploadFile, user: str = Depends(get_current_user)):
+    file_location = get_file_path(file.filename, user)
+    save_upload_file(file, file_location)
+    return {"info": f"file `{file.filename}` uploaded successfully"}
+
 @app.websocket("/ws/{user_name}")
 async def websocket_endpoint(socket: WebSocket, user_name: str):
     print('user_name: ', user_name)
@@ -115,11 +125,3 @@ async def websocket_endpoint(socket: WebSocket, user_name: str):
             await socket.send_text(json.dumps(reply))
     except WebSocketDisconnect:
         print("websocket disconnected")
-
-@app.post("/chat")
-async def chat_route(current_user: str = Depends(get_current_user)):
-    return {"message": "Welcome to the chat!", "user": current_user}
-
-@app.get("/")
-async def root():
-    return {"message": "World! Ready or not ... Here I come!!"}
