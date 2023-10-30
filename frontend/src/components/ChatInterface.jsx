@@ -14,10 +14,15 @@ const ChatInterface = ({ chatRef }) => {
     e.preventDefault();
     if (userInput.trim()) {
       const user_message = { source: "user", text: userInput };
+      const newMessages = [...messages, user_message];
 
-      socketRef.current.send(userInput);
+      try {
+        socketRef.current.send(JSON.stringify(newMessages));
+      } catch (err) {
+        console.error("Error sending message: ", err);
+      }
 
-      setMessages([...messages, user_message]);
+      setMessages(newMessages);
       setUserInput("");
     }
   };
@@ -38,6 +43,9 @@ const ChatInterface = ({ chatRef }) => {
 
       socketInstance.addEventListener("message", (e) => {
         console.log("Received from server: ", e.data);
+        const ai_message = JSON.parse(e.data);
+        setMessages((prevMessages) => [...prevMessages, ai_message]);
+        console.log("messages: ", messages);
       });
     };
 
@@ -52,17 +60,6 @@ const ChatInterface = ({ chatRef }) => {
       }
     };
   }, []);
-
-  // // test successful!
-  // useEffect(() => {
-  //   if (socketRef.current) {
-  //     const socket = socketRef.current;
-  //     socket.addEventListener("message", (e) => {
-  //       const message = e.data;
-  //       console.log("message received: ", message);
-  //     });
-  //   }
-  // }, [messages]);
 
   useEffect(() => {
     if (chatDisplayRef.current) {

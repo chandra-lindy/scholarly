@@ -4,6 +4,7 @@
 # standard library imports
 from dotenv import load_dotenv
 import os
+import json
 import requests
 
 # third party imports
@@ -12,7 +13,8 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.middleware.cors import CORSMiddleware
 from jose import JWTError, jwt
 
-
+# local imports
+from chat import chat
 
 load_dotenv()
 
@@ -98,9 +100,19 @@ async def websocket_endpoint(socket: WebSocket, user_name: str):
     try:
         while True:
             data = await socket.receive_text()
-            # do something with data here, then . . .
-            print(f"Received message: {data}")
-            await socket.send_text(f"Echoing: {data}")
+
+            messages = [(message["source"], message["text"]) for message in json.loads(data)]
+
+            ai_message = chat(messages, openai_key)
+
+            reply = {
+                "source": "ai",
+                "text": ai_message
+            }
+
+
+            print(f"Received message: {messages}")
+            await socket.send_text(json.dumps(reply))
     except WebSocketDisconnect:
         print("websocket disconnected")
 

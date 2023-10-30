@@ -4,7 +4,7 @@ import aiIcon from "../assets/ai-icon.png";
 
 export default function ChatMessage({ source, message }) {
   return (
-    <div className="flex flex-row mb-4">
+    <div className="flex flex-row mb-4 whitespace-pre-line">
       <img
         src={source === "user" ? userIcon : aiIcon}
         alt={`${source} icon`}
