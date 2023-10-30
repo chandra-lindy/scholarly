@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { getSocket } from "../utils/utils";
 
 const ChatInterface = ({ chatRef }) => {
+  console.log("chatInterface rendered");
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
   const chatDisplayRef = useRef(null);
@@ -50,6 +51,7 @@ const ChatInterface = ({ chatRef }) => {
       });
     };
 
+    console.log("before calling setupSocket");
     setupSocket();
 
     return () => {
