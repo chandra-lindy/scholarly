@@ -47,6 +47,7 @@ export async function getResponse(payload) {
 export async function getSocket() {
   const user = await fetchCurrentUser();
   const user_name = user.username;
+  console.log(`Connecting to ${WS_BACKEND_URL}/ws/${user_name}`);
   const socket = new WebSocket(`${WS_BACKEND_URL}/ws/${user_name}`);
 
   return socket;
