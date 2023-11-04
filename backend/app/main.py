@@ -11,14 +11,18 @@ import requests
 from fastapi import (
     FastAPI, Depends, HTTPException,
     Security, WebSocket, WebSocketDisconnect,
-    File, UploadFile)
+    Response, UploadFile)
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from jose import JWTError, jwt
 
 # local imports
 from chat import chat
-from file_operations.file_handler import save_upload_file, get_file_path
+from file_operations.file_handler import (
+    save_upload_file, get_file_path,
+    get_user_directory
+)
 
 load_dotenv()
 
@@ -87,8 +91,6 @@ def get_current_user(authorization: HTTPAuthorizationCredentials = Security(secu
             audience=jwt_audience,
             issuer=jwt_issuer,
         )
-        # debug code
-        print('payload: ', payload)
         user = payload.get("sub")
         if user is None:
             raise HTTPException(status_code=403, detail="User not found")
@@ -101,6 +103,32 @@ async def upload_file(file: UploadFile, user: str = Depends(get_current_user)):
     file_location = get_file_path(file.filename, user)
     save_upload_file(file, file_location)
     return {"info": f"file `{file.filename}` uploaded successfully"}
+
+@app.get("/books")
+async def list_books(user: str = Depends(get_current_user)):
+    user_directory = get_user_directory(user)
+    try:
+        files = os.listdir(user_directory)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    books = [{"id": i, "type": "book", "title": file, "file": ""} for i, file in enumerate(files)]
+    return JSONResponse(content=books)
+
+@app.get("/book/{title}")
+async def get_book(title: str, user: str = Depends(get_current_user)):
+    user_directory = get_user_directory(user)
+    file_location = user_directory / title
+    print('file_location: ', file_location)
+    try:
+        with open(file_location, "rb") as f:
+            file = f.read()
+    except Exception as e:
+        print('error: ', e)
+        raise HTTPException(status_code=500, detail=str(e))
+    response = Response(content=file)
+    response.headers["Content-Type"] = "application/pdf"
+    # return JSONResponse(content=file)
+    return response
 
 @app.websocket("/ws/{user_name}")
 async def websocket_endpoint(socket: WebSocket, user_name: str):

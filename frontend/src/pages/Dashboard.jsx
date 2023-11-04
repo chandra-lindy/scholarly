@@ -9,6 +9,7 @@ import { Auth } from "aws-amplify";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const chatRef = useRef(null);
 
   const navigate = useNavigate();
@@ -46,8 +47,8 @@ const Dashboard = () => {
     <div className="container flex flex-col m-auto">
       <NavBarDash />
       <div className="relative flex h-[calc(100vh-3.65rem)] mt-[3.65rem]">
-        <LeftPanel />
-        <MainPanel />
+        <LeftPanel setSelectedFile={setSelectedFile} />
+        <MainPanel selectedFile={selectedFile} />
         {isOpen ? (
           <ChatInterface chatRef={chatRef} />
         ) : (

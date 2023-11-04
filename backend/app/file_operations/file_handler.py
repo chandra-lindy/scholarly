@@ -16,3 +16,6 @@ def save_upload_file(upload_file: UploadFile, destination: Path):
 def get_file_path(filename: str, user_name: str):
   user_upload_directory = BASE_UPLOAD_DIRECTORY / user_name
   return user_upload_directory / filename
+
+def get_user_directory(user: str):
+  return BASE_UPLOAD_DIRECTORY / user
