@@ -51,7 +51,6 @@ const LeftPanel = ({ setSelectedFile }) => {
       console.log("handleSelectFile called without file");
       console.log("book: ", book);
       console.log("file: ", book.file);
-      // TODO: handle this case
       const file = await getBook(book.title);
       const newBooks = books.map((b) => {
         if (b.title === book.title) {
@@ -78,12 +77,22 @@ const LeftPanel = ({ setSelectedFile }) => {
       try {
         const bookList = await getBookList();
         setBooks(bookList);
+        console.log("bookList: ", bookList);
+        console.log("bookList[0].file: ", bookList[0].file);
+        // handleSelectFile(bookList[0]);
       } catch (err) {
         console.error("There was an error getting the book list!", err);
       }
     }
     if (books.length === 0) setup();
   }, []);
+
+  useEffect(() => {
+    console.log("books: ", books);
+    if (books.length > 0 && !books[0].file) {
+      handleSelectFile(books[0]);
+    }
+  });
 
   return (
     <div className="flex-none shrink-0 w-1/5 mt-2">
