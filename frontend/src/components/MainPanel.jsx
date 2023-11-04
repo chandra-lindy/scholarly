@@ -1,20 +1,9 @@
 import PropTypes from "prop-types";
-import { Worker, Viewer, SpecialZoomLevel } from "@react-pdf-viewer/core";
 
 const MainPanel = ({ selectedFile }) => {
   console.log("selectedFile: ", selectedFile);
   return (
     <div className="w-4/5 bg-brand-paper text-lg text-brand-main px-4 pb-4 overflow-y-auto h-[calc(100vh-3.75rem)]">
-      {/* {selectedFile ? (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-          <Viewer
-            fileUrl={URL.createObjectURL(selectedFile)}
-            defaultScale={SpecialZoomLevel.PageWidth}
-          />
-        </Worker>
-      ) : (
-        "Select a file to view."
-      )} */}
       {selectedFile ? (
         <iFrame
           src={URL.createObjectURL(selectedFile)}
