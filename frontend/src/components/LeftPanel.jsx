@@ -76,6 +76,7 @@ const LeftPanel = ({ setSelectedFile }) => {
     async function setup() {
       try {
         const bookList = await getBookList();
+        handleSelectFile(bookList[0]);
         setBooks(bookList);
         console.log("bookList: ", bookList);
         console.log("bookList[0].file: ", bookList[0].file);
@@ -88,8 +89,8 @@ const LeftPanel = ({ setSelectedFile }) => {
   }, []);
 
   useEffect(() => {
-    console.log("books: ", books);
     if (books.length > 0 && !books[0].file) {
+      console.log("default to first book on list", books[0]);
       handleSelectFile(books[0]);
     }
   });

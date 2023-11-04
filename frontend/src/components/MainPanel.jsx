@@ -12,7 +12,7 @@ const MainPanel = ({ selectedFile }) => {
           title="PDF Viewer"
         />
       ) : (
-        "select a file to view."
+        "Loading . . ."
       )}
     </div>
   );
