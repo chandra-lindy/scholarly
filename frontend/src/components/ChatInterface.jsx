@@ -72,7 +72,7 @@ const ChatInterface = ({ chatRef }) => {
 
   return (
     <div
-      className="absolute bottom-0 right-0 flex flex-col w-1/2 h-full mt-[3.75] text-brand-paper"
+      className="absolute bottom-0 right-0 flex flex-col w-4/5 h-full mt-[3.75] text-brand-paper px-4 pb-4 bg-brand-paper"
       ref={chatRef}
     >
       <div
