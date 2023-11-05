@@ -3,10 +3,12 @@ import { Auth } from "aws-amplify";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo-no-slogan.png";
+import { Bars } from "react-loader-spinner";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -14,6 +16,7 @@ const Register = () => {
   const emailInputRef = useRef(null);
 
   const signUp = useCallback(async () => {
+    setIsLoading(true);
     try {
       await Auth.signUp({
         username: email,
@@ -22,8 +25,10 @@ const Register = () => {
           email,
         },
       });
+      setIsLoading(false);
       navigate("/confirm", { state: { email } });
     } catch (error) {
+      setIsLoading(false);
       navigate("/register", { state: { error: error.message } });
     }
   }, [email, password, navigate]);
@@ -46,39 +51,51 @@ const Register = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="flex flex-col items-center bg-white p-8 rounded-lg shadow-lg">
-        <Link to="/">
-          <img src={logo} alt="Scholarly Logo" className="max-w-md mb-4" />
-        </Link>
+      {isLoading ? (
+        <Bars
+          height="80"
+          width="80"
+          color="#c8532c"
+          ariaLabel="bars-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      ) : (
+        <div className="flex flex-col items-center bg-white p-8 rounded-lg shadow-lg">
+          <Link to="/">
+            <img src={logo} alt="Scholarly Logo" className="max-w-md mb-4" />
+          </Link>
 
-        <p
-          className="p-2 my-4 text-red-600 text-xs"
-          style={{ visibility: errorMessage ? "visible" : "hidden" }}
-        >
-          {errorMessage || "Error message if any"}
-        </p>
+          <p
+            className="p-2 my-4 text-red-600 text-xs"
+            style={{ visibility: errorMessage ? "visible" : "hidden" }}
+          >
+            {errorMessage || "Error message if any"}
+          </p>
 
-        <div className="flex flex-col w-full">
-          <input
-            type="text"
-            name="email"
-            placeholder="Email"
-            className="p-2 mb-4 border border-brand-main rounded"
-            onChange={(e) => setEmail(e.target.value)}
-            ref={emailInputRef}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            className="p-2 mb-4 border border-brand-main rounded"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button className="btn" onClick={signUp}>
-            Register
-          </button>
+          <div className="flex flex-col w-full">
+            <input
+              type="text"
+              name="email"
+              placeholder="Email"
+              className="p-2 mb-4 border border-brand-main rounded"
+              onChange={(e) => setEmail(e.target.value)}
+              ref={emailInputRef}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="p-2 mb-4 border border-brand-main rounded"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button className="btn" onClick={signUp}>
+              Register
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo-no-slogan.png";
 import { Link } from "react-router-dom";
 import { Bars } from "react-loader-spinner";
-// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
