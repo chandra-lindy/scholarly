@@ -8,14 +8,20 @@ import { Bars } from "react-loader-spinner";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [pwConfirm, setPwConfirm] = useState("");
+  const [isPwMatch, setIsPwMatch] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
-  const errorMessage = location.state?.error || "";
   const emailInputRef = useRef(null);
 
   const signUp = useCallback(async () => {
+    if (password !== pwConfirm) {
+      setIsPwMatch(false);
+      return;
+    }
     setIsLoading(true);
     try {
       await Auth.signUp({
@@ -31,7 +37,7 @@ const Register = () => {
       setIsLoading(false);
       navigate("/register", { state: { error: error.message } });
     }
-  }, [email, password, navigate]);
+  }, [email, password, navigate, pwConfirm]);
 
   useEffect(() => {
     emailInputRef.current.focus();
@@ -48,6 +54,13 @@ const Register = () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [signUp]);
+
+  useEffect(() => {
+    setErrorMessage(location.state?.error);
+    if (!isPwMatch) {
+      setErrorMessage("Passwords do not match. Please try again");
+    }
+  }, [isPwMatch, location.state?.error]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -89,6 +102,13 @@ const Register = () => {
               placeholder="Password"
               className="p-2 mb-4 border border-brand-main rounded"
               onChange={(e) => setPassword(e.target.value)}
+            />
+            <input
+              type="password"
+              name="pwConfirm"
+              placeholder="Confirm Password"
+              className="p-2 mb-4 border border-brand-main rounded"
+              onChange={(e) => setPwConfirm(e.target.value)}
             />
             <button className="btn" onClick={signUp}>
               Register
