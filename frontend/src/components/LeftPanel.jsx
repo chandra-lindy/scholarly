@@ -76,11 +76,14 @@ const LeftPanel = ({ setSelectedFile }) => {
     async function setup() {
       try {
         const bookList = await getBookList();
-        handleSelectFile(bookList[0]);
-        setBooks(bookList);
-        console.log("bookList: ", bookList);
-        console.log("bookList[0].file: ", bookList[0].file);
-        // handleSelectFile(bookList[0]);
+        if (bookList.length > 0) {
+          handleSelectFile(bookList[0]);
+          setBooks(bookList);
+          console.log("bookList: ", bookList);
+          console.log("bookList[0].file: ", bookList[0].file);
+        } else {
+          console.log("bookList is empty must be a new user");
+        }
       } catch (err) {
         console.error("There was an error getting the book list!", err);
       }

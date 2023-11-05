@@ -107,11 +107,16 @@ async def upload_file(file: UploadFile, user: str = Depends(get_current_user)):
 @app.get("/books")
 async def list_books(user: str = Depends(get_current_user)):
     user_directory = get_user_directory(user)
+    files = None
     try:
         files = os.listdir(user_directory)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    books = [{"id": i, "type": "book", "title": file, "file": ""} for i, file in enumerate(files)]
+        # raise HTTPException(status_code=500, detail=str(e))
+        pass
+    if files:
+        books = [{"id": i, "type": "book", "title": file, "file": ""} for i, file in enumerate(files)]
+    else:
+        books = []
     return JSONResponse(content=books)
 
 @app.get("/book/{title}")
