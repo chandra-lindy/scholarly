@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pip3 install -r /home/ubuntu/scholarly/backend/requirements.txt
+pip3 install -r /home/ubuntu/scholarly/backend/app/requirements.txt
