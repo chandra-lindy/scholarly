@@ -19,6 +19,18 @@ const ChatWrapper = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
   return isOpen ? (
     <ChatInterface chatRef={chatRef} />
   ) : (
