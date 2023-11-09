@@ -20,3 +20,8 @@
     @apply focus:ring-0 focus:ring-offset-0 focus:outline-none;
   }
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0.1rem; /* This width will make the scrollbar invisible */
+  display: none; /* Hide the scrollbar */
+}

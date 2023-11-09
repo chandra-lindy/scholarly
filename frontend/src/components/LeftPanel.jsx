@@ -99,7 +99,7 @@ const LeftPanel = ({ setSelectedFile }) => {
   });
 
   return (
-    <div className="flex-none shrink-0 w-1/5 mt-2">
+    <div className="flex-none shrink-0 w-1/5 mt-2 overflow-y-auto hide-scrollbar">
       <FileUpload handleFileChange={handleFileChange} />
       {bookCards}
     </div>
