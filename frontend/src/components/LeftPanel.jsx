@@ -5,27 +5,18 @@ import { uploadFile, getBookList, getBook } from "../utils/utils";
 import PropTypes from "prop-types";
 
 const LeftPanel = ({ setSelectedFile }) => {
-  const [file, setFile] = useState(null);
   const [books, setBooks] = useState([]);
-  const [uploadStatus, setUploadStatus] = useState("");
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
     handleUpload(e.target.files[0]);
   };
 
   const handleUpload = async (file) => {
-    if (!file) {
-      setUploadStatus("Please select a file.");
-      return;
-    }
-
     const formData = new FormData();
     formData.append("file", file);
 
     try {
-      const message = await uploadFile(formData);
-      setUploadStatus(message);
+      await uploadFile(formData);
       setBooks((prevBooks) => [
         ...prevBooks,
         { id: prevBooks.length, type: "book", title: file.name, file: file },
@@ -33,7 +24,6 @@ const LeftPanel = ({ setSelectedFile }) => {
       setSelectedFile(file);
     } catch (err) {
       console.error("There was an error uploading the file!", err);
-      setUploadStatus("File upload failed.");
     }
   };
 

@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { getSocket } from "../utils/utils";
 
 const ChatInterface = ({ chatRef }) => {
-  console.log("chatInterface rendered");
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
   const chatDisplayRef = useRef(null);
@@ -29,11 +28,9 @@ const ChatInterface = ({ chatRef }) => {
   };
 
   useEffect(() => {
-    console.log("chatInterface mounted");
     let isMounted = true;
 
     const setupSocket = async () => {
-      console.log("setting up socket");
       const socketInstance = await getSocket();
       if (!isMounted) return;
 
@@ -51,11 +48,9 @@ const ChatInterface = ({ chatRef }) => {
       });
     };
 
-    console.log("before calling setupSocket");
     setupSocket();
 
     return () => {
-      console.log("ChatInstance unmounted");
       isMounted = false;
       if (socketRef.current) {
         console.log("cleaning up websocket connection");
