@@ -89,10 +89,12 @@ const LeftPanel = ({ setSelectedFile }) => {
         console.error("There was an error getting the book list!", err);
       }
     }
+    console.log("books.length (expect 0): ", books.length);
     if (books.length === 0) setup();
   }, []);
 
   useEffect(() => {
+    console.log("books.length (expect > 0): ", books.length);
     if (books.length > 0 && !books[0].file) {
       console.log("default to first book on list", books[0]);
       handleSelectFile(books[0]);

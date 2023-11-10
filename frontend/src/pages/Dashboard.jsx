@@ -12,6 +12,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("useEffect in Dashboard.jsx auth check");
     const checkAuth = async () => {
       try {
         await Auth.currentAuthenticatedUser();
