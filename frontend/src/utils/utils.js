@@ -8,7 +8,7 @@ export async function fetchCurrentUser() {
     const user = await Auth.currentAuthenticatedUser();
     return user;
   } catch (err) {
-    console.log("User not authenticated", err);
+    console.error("User not authenticated", err);
     return null;
   }
 }
@@ -19,7 +19,7 @@ export async function fetchToken() {
     const jwtToken = user.signInUserSession.idToken.jwtToken;
     return jwtToken;
   } catch (err) {
-    console.log("User not authenticated", err);
+    console.error("User not authenticated", err);
     return null;
   }
 }
@@ -27,25 +27,19 @@ export async function fetchToken() {
 export async function getSocket() {
   const user = await fetchCurrentUser();
   const user_name = user.username;
-  console.log(`Connecting to ${WS_BACKEND_URL}/ws/${user_name}`);
   const socket = new WebSocket(`${WS_BACKEND_URL}/ws/${user_name}`);
 
   return socket;
 }
 
 export async function getBookList() {
-  console.log("getBookList called");
   const token = await fetchToken();
-  console.log("token fetched: ", token);
   try {
-    console.log("trying to fetch book list");
     const response = await axios.get(`${HTTP_BACKEND_URL}/books`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("response: ", response);
-    console.log("response.data: ", response.data);
 
     return response.data;
   } catch (err) {
@@ -79,7 +73,6 @@ export async function getBook(book_title) {
       responseType: "blob",
     });
 
-    console.log("response: ", response);
     return response.data;
   } catch (err) {
     console.error("Error fetching book", err);

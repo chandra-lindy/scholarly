@@ -9,10 +9,6 @@ const LeftPanel = ({ setSelectedFile }) => {
   const [books, setBooks] = useState([]);
   const [uploadStatus, setUploadStatus] = useState("");
 
-  // debug code
-  console.log("file", file);
-  console.log("uplaodStatus: ", uploadStatus);
-
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     handleUpload(e.target.files[0]);
@@ -43,14 +39,8 @@ const LeftPanel = ({ setSelectedFile }) => {
 
   const handleSelectFile = async (book) => {
     if (book.file) {
-      console.log("handleSelectFile called with file");
-      console.log("book: ", book);
-      console.log("file: ", book.file);
       setSelectedFile(book.file);
     } else {
-      console.log("handleSelectFile called without file");
-      console.log("book: ", book);
-      console.log("file: ", book.file);
       const file = await getBook(book.title);
       const newBooks = books.map((b) => {
         if (b.title === book.title) {
@@ -73,30 +63,22 @@ const LeftPanel = ({ setSelectedFile }) => {
   ));
 
   useEffect(() => {
-    console.log("left panel rendered");
     async function setup() {
       try {
         const bookList = await getBookList();
         if (bookList.length > 0) {
           handleSelectFile(bookList[0]);
           setBooks(bookList);
-          console.log("bookList: ", bookList);
-          console.log("bookList[0].file: ", bookList[0].file);
-        } else {
-          console.log("bookList is empty must be a new user");
         }
       } catch (err) {
         console.error("There was an error getting the book list!", err);
       }
     }
-    console.log("books.length (expect 0): ", books.length);
     if (books.length === 0) setup();
   }, []);
 
   useEffect(() => {
-    console.log("books.length (expect > 0): ", books.length);
     if (books.length > 0 && !books[0].file) {
-      console.log("default to first book on list", books[0]);
       handleSelectFile(books[0]);
     }
   });
