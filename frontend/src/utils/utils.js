@@ -34,8 +34,11 @@ export async function getSocket() {
 }
 
 export async function getBookList() {
+  console.log("getBookList called");
   const token = await fetchToken();
+  console.log("token fetched: ", token);
   try {
+    console.log("trying to fetch book list");
     const response = await axios.get(`${HTTP_BACKEND_URL}/books`, {
       headers: {
         Authorization: `Bearer ${token}`,

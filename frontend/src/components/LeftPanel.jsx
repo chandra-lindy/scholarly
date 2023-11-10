@@ -11,7 +11,7 @@ const LeftPanel = ({ setSelectedFile }) => {
 
   // debug code
   console.log("file", file);
-  console.log("uplaodStatus", uploadStatus);
+  console.log("uplaodStatus: ", uploadStatus);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -73,6 +73,7 @@ const LeftPanel = ({ setSelectedFile }) => {
   ));
 
   useEffect(() => {
+    console.log("left panel rendered");
     async function setup() {
       try {
         const bookList = await getBookList();
