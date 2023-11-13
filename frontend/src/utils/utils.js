@@ -24,10 +24,12 @@ export async function fetchToken() {
   }
 }
 
-export async function getSocket() {
+export async function getSocket(book_title) {
   const user = await fetchCurrentUser();
   const user_name = user.username;
-  const socket = new WebSocket(`${WS_BACKEND_URL}/ws/${user_name}`);
+  const socket = new WebSocket(
+    `${WS_BACKEND_URL}/ws/${user_name}/${book_title}`
+  );
 
   return socket;
 }
