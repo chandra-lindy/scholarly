@@ -135,7 +135,7 @@ async def get_book(title: str, user: str = Depends(get_current_user)):
     # return JSONResponse(content=file)
     return response
 
-@app.websocket("/ws/{user_name}")
+@app.websocket("/ws/{user_name}/{book_title}")
 async def websocket_endpoint(socket: WebSocket, user_name: str):
     print('user_name: ', user_name)
     await socket.accept()
