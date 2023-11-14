@@ -23,6 +23,7 @@ from file_operations.file_handler import (
     save_upload_file, get_file_path,
     get_user_directory
 )
+from chatbot.messages_retrieval_chain import MessagesRetrievalChain
 
 load_dotenv()
 
@@ -136,17 +137,18 @@ async def get_book(title: str, user: str = Depends(get_current_user)):
     return response
 
 @app.websocket("/ws/{user_name}/{book_title}")
-async def websocket_endpoint(socket: WebSocket, user_name: str):
-    print('user_name: ', user_name)
+async def websocket_endpoint(
+    socket: WebSocket, user_name: str, book_title: str):
+
     await socket.accept()
+    file_path = get_file_path(book_title, user_name)
+    retChat = MessagesRetrievalChain(file_path)
 
     try:
         while True:
             data = await socket.receive_text()
 
-            messages = [(message["source"], message["text"]) for message in json.loads(data)]
-
-            ai_message = chat(messages, openai_key)
+            ai_message = retChat.invoke(data)
 
             reply = {
                 "source": "ai",
@@ -154,7 +156,9 @@ async def websocket_endpoint(socket: WebSocket, user_name: str):
             }
 
 
-            print(f"Received message: {messages}")
+            # print(f"Received message: {messages}")
             await socket.send_text(json.dumps(reply))
     except WebSocketDisconnect:
         print("websocket disconnected")
+        retChat.retriever.reset()
+        # retChat.retriever.loader.close()

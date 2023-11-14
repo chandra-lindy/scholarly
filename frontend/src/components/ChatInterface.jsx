@@ -17,7 +17,7 @@ const ChatInterface = ({ selectedFile, chatRef }) => {
       const newMessages = [...messages, user_message];
 
       try {
-        socketRef.current.send(JSON.stringify(newMessages));
+        socketRef.current.send(JSON.stringify(userInput));
       } catch (err) {
         console.error("Error sending message: ", err);
       }
@@ -29,8 +29,13 @@ const ChatInterface = ({ selectedFile, chatRef }) => {
 
   useEffect(() => {
     let isMounted = true;
+    console.log("selectedFile title: ", selectedFile.title);
 
     const setupSocket = async () => {
+      if (socketRef.current) {
+        console.log("websocket already open");
+        return;
+      }
       const socketInstance = await getSocket(selectedFile.title);
       if (!isMounted) return;
 
