@@ -9,6 +9,7 @@ const ChatInterface = ({ selectedFile, chatRef }) => {
   const [userInput, setUserInput] = useState("");
   const chatDisplayRef = useRef(null);
   const socketRef = useRef(null);
+  const chatInputRef = useRef(null);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -69,10 +70,11 @@ const ChatInterface = ({ selectedFile, chatRef }) => {
     }
   }, [messages]);
 
-  // debug effect
   useEffect(() => {
-    console.log("messages: ", messages);
-  }, [messages]);
+    if (chatInputRef.current) {
+      chatInputRef.current.focus();
+    }
+  }, []);
 
   return (
     <div
@@ -96,6 +98,7 @@ const ChatInterface = ({ selectedFile, chatRef }) => {
           className="w-full mr-4 bg-brand-main p-2 pl-4 rounded-xl"
           type="text"
           id="chat input"
+          ref={chatInputRef}
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           onKeyUp={(e) => {
