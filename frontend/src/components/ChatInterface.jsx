@@ -4,7 +4,7 @@ import chatIcon from "../assets/chat.png";
 import PropTypes from "prop-types";
 import { getSocket } from "../utils/utils";
 
-const ChatInterface = ({ chatRef }) => {
+const ChatInterface = ({ selectedFile, chatRef }) => {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
   const chatDisplayRef = useRef(null);
@@ -31,7 +31,7 @@ const ChatInterface = ({ chatRef }) => {
     let isMounted = true;
 
     const setupSocket = async () => {
-      const socketInstance = await getSocket();
+      const socketInstance = await getSocket(selectedFile.title);
       if (!isMounted) return;
 
       socketRef.current = socketInstance;
@@ -44,7 +44,6 @@ const ChatInterface = ({ chatRef }) => {
         console.log("Received from server: ", e.data);
         const ai_message = JSON.parse(e.data);
         setMessages((prevMessages) => [...prevMessages, ai_message]);
-        console.log("messages: ", messages);
       });
     };
 
@@ -63,6 +62,11 @@ const ChatInterface = ({ chatRef }) => {
     if (chatDisplayRef.current) {
       chatDisplayRef.current.scrollTop = chatDisplayRef.current.scrollHeight;
     }
+  }, [messages]);
+
+  // debug effect
+  useEffect(() => {
+    console.log("messages: ", messages);
   }, [messages]);
 
   return (
@@ -105,6 +109,7 @@ const ChatInterface = ({ chatRef }) => {
 
 ChatInterface.propTypes = {
   chatRef: PropTypes.object.isRequired,
+  selectedFile: PropTypes.object.isRequired,
 };
 
 export default ChatInterface;

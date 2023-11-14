@@ -29,7 +29,7 @@ const LeftPanel = ({ setSelectedFile }) => {
 
   const handleSelectFile = async (book) => {
     if (book.file) {
-      setSelectedFile(book.file);
+      setSelectedFile({ title: book.title, file: book.file });
     } else {
       const file = await getBook(book.title);
       const newBooks = books.map((b) => {
@@ -39,7 +39,7 @@ const LeftPanel = ({ setSelectedFile }) => {
         return b;
       });
       setBooks(newBooks);
-      setSelectedFile(file);
+      setSelectedFile({ title: book.title, file: file });
     }
   };
 

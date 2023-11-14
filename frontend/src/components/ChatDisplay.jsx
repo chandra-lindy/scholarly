@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import ChatIcon from "../components/ChatIcon";
 import ChatInterface from "../components/ChatInterface";
+import Proptypes from "prop-types";
 
-const ChatWrapper = () => {
+const ChatDisplay = ({ selectedFile }) => {
   const [isOpen, setIsOpen] = useState(false);
   const chatRef = useRef(null);
 
@@ -32,10 +33,14 @@ const ChatWrapper = () => {
   }, []);
 
   return isOpen ? (
-    <ChatInterface chatRef={chatRef} />
+    <ChatInterface selectedFile={selectedFile} chatRef={chatRef} />
   ) : (
     <ChatIcon handleIconClick={() => setIsOpen(true)} />
   );
 };
 
-export default ChatWrapper;
+ChatDisplay.propTypes = {
+  selectedFile: Proptypes.object.isRequired,
+};
+
+export default ChatDisplay;
