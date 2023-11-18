@@ -14,8 +14,7 @@ const LeftPanel = ({ setSelectedFile }) => {
   const handleUpload = async (file) => {
     const formData = new FormData();
     console.log("file.name: ", file.name);
-    let encoded_filename = encodeURIComponent(file.name);
-    formData.append("file", file, encoded_filename);
+    formData.append("file", file);
 
     try {
       await uploadFile(formData);

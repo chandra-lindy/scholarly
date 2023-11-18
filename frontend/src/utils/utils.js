@@ -54,11 +54,6 @@ export async function getBookList() {
     });
 
     console.log("response.data: ", response.data);
-    const data = response.data.map((book) => {
-      book.title = decodeURIComponent(book.title);
-    });
-
-    console.log("data: ", data);
     return response.data;
   } catch (err) {
     console.error("Error fetching book list", err);
@@ -84,19 +79,14 @@ export async function uploadFile(data) {
 export async function getBook(book_title) {
   console.log("getting book");
   const token = await fetchToken();
-  const encoded_book_title = encodeURIComponent(book_title);
   console.log("book_title: ", book_title);
-  console.log("encoded_book_title: ", encoded_book_title);
   try {
-    const response = await axios.get(
-      `${HTTP_BACKEND_URL}/book/${encoded_book_title}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        responseType: "blob",
-      }
-    );
+    const response = await axios.get(`${HTTP_BACKEND_URL}/book/${book_title}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      responseType: "blob",
+    });
 
     return response.data;
   } catch (err) {
