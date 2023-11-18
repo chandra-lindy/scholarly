@@ -13,7 +13,9 @@ const LeftPanel = ({ setSelectedFile }) => {
 
   const handleUpload = async (file) => {
     const formData = new FormData();
-    formData.append("file", file);
+    console.log("file.name: ", file.name);
+    let encoded_filename = encodeURIComponent(file.name);
+    formData.append("file", file, encoded_filename);
 
     try {
       await uploadFile(formData);
@@ -28,9 +30,13 @@ const LeftPanel = ({ setSelectedFile }) => {
   };
 
   const handleSelectFile = async (book) => {
+    console.log("handleSelectFile: ");
+    console.log("book: ", book);
     if (book.file) {
+      console.log("book.file exists: ", !!book.file);
       setSelectedFile({ title: book.title, file: book.file });
     } else {
+      console.log("book.title: ", book.title);
       const file = await getBook(book.title);
       const newBooks = books.map((b) => {
         if (b.title === book.title) {

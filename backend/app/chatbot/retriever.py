@@ -7,7 +7,7 @@ class Retriever:
   def __init__(self, document_path, settings):
     self.loader = PyPDFLoader(document_path)
     self.splitter = RecursiveCharacterTextSplitter(
-      chunk_size=3000,
+      chunk_size=2000,
       chunk_overlap=100
     )
     self.docs = self.loader.load_and_split(text_splitter=self.splitter)
@@ -15,7 +15,7 @@ class Retriever:
       documents=self.docs,
       embedding=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY),
     )
-    self.retriever = self.db.as_retriever(search_type="similarity", k=1)
+    self.retriever = self.db.as_retriever(search_type="mmr", k=3)
 
   def search(self, query):
     return self.retriever.get_relevant_documents(query)

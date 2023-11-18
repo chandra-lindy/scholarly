@@ -102,6 +102,7 @@ def get_current_user(authorization: HTTPAuthorizationCredentials = Security(secu
 @app.post("/upload")
 async def upload_file(file: UploadFile, user: str = Depends(get_current_user)):
     file_location = get_file_path(file.filename, user)
+    print('file_location: ', file_location)
     save_upload_file(file, file_location)
     return {"info": f"file `{file.filename}` uploaded successfully"}
 
@@ -122,11 +123,16 @@ async def list_books(user: str = Depends(get_current_user)):
 
 @app.get("/book/{title}")
 async def get_book(title: str, user: str = Depends(get_current_user)):
+    print('inside GET /book/{title}')
+    print('title: ', title)
     user_directory = get_user_directory(user)
+    print('user_directory: ', user_directory)
     file_location = user_directory / title
     print('file_location: ', file_location)
     try:
+        print('trying to open file')
         with open(file_location, "rb") as f:
+            print('file opened')
             file = f.read()
     except Exception as e:
         print('error: ', e)
@@ -140,8 +146,10 @@ async def get_book(title: str, user: str = Depends(get_current_user)):
 async def websocket_endpoint(
     socket: WebSocket, user_name: str, book_title: str):
 
+    print("user_name: ", user_name)
+    print("book_title: ", book_title)
     await socket.accept()
-    file_path = get_file_path(book_title, user_name)
+    file_path = str(get_file_path(book_title, user_name))
     retChat = MessagesRetrievalChain(file_path)
 
     try:
@@ -159,6 +167,7 @@ async def websocket_endpoint(
             # print(f"Received message: {messages}")
             await socket.send_text(json.dumps(reply))
     except WebSocketDisconnect:
-        print("websocket disconnected")
         retChat.retriever.reset()
+        print("websocket closed")
+        await socket.close()
         # retChat.retriever.loader.close()

@@ -14,11 +14,12 @@ def save_upload_file(upload_file: UploadFile, destination: Path):
     upload_file.file.close()
 
 def get_file_path(filename: str, user_name: str):
+  print("get_file_path")
   user_upload_directory = BASE_UPLOAD_DIRECTORY / user_name
   print ('base upload directory: ', BASE_UPLOAD_DIRECTORY)
   print('username: ', user_name)
   print('returns: ', user_upload_directory / filename)
-  return str(user_upload_directory / filename)
+  return user_upload_directory / filename
 
 def get_user_directory(user: str):
   return BASE_UPLOAD_DIRECTORY / user

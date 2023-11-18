@@ -4,6 +4,7 @@ import { WS_BACKEND_URL } from "./constants.js";
 import axios from "axios";
 
 export async function fetchCurrentUser() {
+  console.log("fetching current user");
   try {
     const user = await Auth.currentAuthenticatedUser();
     return user;
@@ -25,10 +26,19 @@ export async function fetchToken() {
 }
 
 export async function getSocket(book_title) {
+  console.log("getting socket");
   const user = await fetchCurrentUser();
   const user_name = user.username;
+  const encoded_book_title = encodeURIComponent(book_title);
+  console.log("book_title: ", book_title);
+  console.log("encoded_book_title: ", encoded_book_title);
+  console.log("user_name: ", user_name);
+  console.log(
+    "url: ",
+    `${WS_BACKEND_URL}/ws/${user_name}/${encoded_book_title}`
+  );
   const socket = new WebSocket(
-    `${WS_BACKEND_URL}/ws/${user_name}/${book_title}`
+    `${WS_BACKEND_URL}/ws/${user_name}/${encoded_book_title}`
   );
 
   return socket;
@@ -43,6 +53,12 @@ export async function getBookList() {
       },
     });
 
+    console.log("response.data: ", response.data);
+    const data = response.data.map((book) => {
+      book.title = decodeURIComponent(book.title);
+    });
+
+    console.log("data: ", data);
     return response.data;
   } catch (err) {
     console.error("Error fetching book list", err);
@@ -66,14 +82,21 @@ export async function uploadFile(data) {
 }
 
 export async function getBook(book_title) {
+  console.log("getting book");
   const token = await fetchToken();
+  const encoded_book_title = encodeURIComponent(book_title);
+  console.log("book_title: ", book_title);
+  console.log("encoded_book_title: ", encoded_book_title);
   try {
-    const response = await axios.get(`${HTTP_BACKEND_URL}/book/${book_title}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      responseType: "blob",
-    });
+    const response = await axios.get(
+      `${HTTP_BACKEND_URL}/book/${encoded_book_title}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+      }
+    );
 
     return response.data;
   } catch (err) {
