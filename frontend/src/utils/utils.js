@@ -80,13 +80,17 @@ export async function getBook(book_title) {
   console.log("getting book");
   const token = await fetchToken();
   console.log("book_title: ", book_title);
+  const encoded_book_title = encodeURIComponent(book_title);
   try {
-    const response = await axios.get(`${HTTP_BACKEND_URL}/book/${book_title}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      responseType: "blob",
-    });
+    const response = await axios.get(
+      `${HTTP_BACKEND_URL}/book/${encoded_book_title}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+      }
+    );
 
     return response.data;
   } catch (err) {
