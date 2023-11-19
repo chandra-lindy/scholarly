@@ -9,6 +9,24 @@
   .text-link {
     @apply text-brand-aux-1 hover:text-brand-aux-2;
   }
+  .text-fade {
+    position: relative;
+  }
+  .text-fade::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent,
+      transparent 70%,
+      #c8532c 100%
+    );
+    pointer-events: none; /* Allows clicking through the overlay to the underlying text */
+  }
 }
 
 @layer base {
