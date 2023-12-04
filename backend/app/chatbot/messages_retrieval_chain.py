@@ -8,17 +8,16 @@ from config import settings
 class MessagesRetrievalChain:
   def __init__(self, document_path=""):
     self.initial_system_message = """
-    You are an AI assistant helping the user review a document. You will be provided excerpts of the document extracted from the whole document based on the semantic similarity of the user's query.  Thus, it is very important the user asks good questions using keywords that are relevant to the document.  When they do this, the excerpt you are provided with will be more accurate.  However, when the user follows this guideline, and you still are not provided with accurate excerpts, you should inform the user that it is likely not available in the document.
+    Act as a Professor and provide the user with guidance and support.
 
     rules:
-    - be honest about what the excerpts you have access to
-    - guide the user to ask better questions"""
+    """
     self.context_intro = """
     [document context] The user is reviewing a document. The following is the beginning portion of the document as an overview:
 
     """
     self.context_template = """
-    [document context] only if it is relevant to the current conversation should you consider from the following context, a partial excerpt, from the document:
+    [document context] The following is parts of the document that are most relevant to the user's question:
 
     """
     self.messages = Messages(self.initial_system_message)

@@ -11,7 +11,7 @@ const Card = ({ type, title, handleSelectFile }) => {
 
   return (
     <div
-      className=" flex bg-brand-main mt-2 px-4 py-2 rounded-lg hover:bg-brand-aux-2 transition duration-300 whitespace-nowrap overflow-hidden text-fade"
+      className=" flex bg-brand-main mt-2 px-4 py-2 rounded-lg hover:bg-brand-aux-2 transition duration-300 whitespace-nowrap overflow-hidden text-fade cursor-pointer"
       onClick={handleSelectFile}
     >
       {icon}

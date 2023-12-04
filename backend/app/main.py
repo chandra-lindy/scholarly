@@ -163,11 +163,7 @@ async def websocket_endpoint(
                 "text": ai_message
             }
 
-
-            # print(f"Received message: {messages}")
             await socket.send_text(json.dumps(reply))
     except WebSocketDisconnect:
         retChat.retriever.reset()
         print("websocket closed")
-        await socket.close()
-        # retChat.retriever.loader.close()

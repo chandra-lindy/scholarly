@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import ChatMessage from "./ChatMessage";
-import chatIcon from "../assets/chat.png";
+import chatIcon from "../assets/chat_main_color.png";
 import PropTypes from "prop-types";
 import { getSocket } from "../utils/utils";
 
@@ -78,11 +78,11 @@ const ChatInterface = ({ selectedFile, chatRef }) => {
 
   return (
     <div
-      className="absolute bottom-0 right-0 flex flex-col w-4/5 h-full mt-[3.75] text-brand-paper px-4 pb-4 bg-brand-paper"
+      className="absolute bottom-0 right-0 flex flex-col w-4/5 h-full mt-[3.75] px-4 pb-4 bg-brand-paper"
       ref={chatRef}
     >
       <div
-        className="bg-brand-main h-full w-full h-11/12 rounded-xl p-4 overflow-y-auto"
+        className="h-full w-full h-11/12 p-4 overflow-y-auto"
         ref={chatDisplayRef}
       >
         {messages.map((message, index) => (
@@ -93,9 +93,9 @@ const ChatInterface = ({ selectedFile, chatRef }) => {
           />
         ))}
       </div>
-      <div className="flex bg-brand-main w-full h-1/12 rounded-xl my-1">
+      <div className="flex bg-brand-paper w-full h-1/12 rounded-xl my-1 border-2 border-brand-main">
         <input
-          className="w-full mr-4 bg-brand-main p-2 pl-4 rounded-xl"
+          className="w-full mr-4 bg-brand-paper p-2 pl-4 rounded-xl"
           type="text"
           id="chat input"
           ref={chatInputRef}
